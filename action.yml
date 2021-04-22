@@ -1,0 +1,26 @@
+name: 'Docker Sign'
+description: 'A Github Action to sign docker images'
+author: 'Neohelden GmbH'
+branding:
+  icon: 'anchor'
+  color: 'blue'
+
+inputs:
+  tags:
+    description: 'The tag to sign container'
+    required: true
+  key:
+    description: The key to use
+    required: true
+  keyname:
+    description: The name of the key
+    required: true
+  registry:
+    description: The url of the notary server (defaults to notary.docker.io)
+    required: false
+    default: https://notary.docker.io
+
+runs:
+  using: node12
+  main: dist/index.js
+  post: dist/index.js
