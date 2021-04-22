@@ -14,10 +14,10 @@ const env = {
 export async function sign(tags: string[], password: string) {
   core.startGroup('Signing and pushing images')
 
-  let images = await exec('docker', { args: ['images'] })
+  const images = await exec('docker', { args: ['images'] })
   core.debug('Available images: \n' + images.stdout)
 
-  for (let tag of tags) {
+  for (const tag of tags) {
     await signTag(tag, password)
   }
 
@@ -32,7 +32,7 @@ export async function sign(tags: string[], password: string) {
 async function signTag(tag: string, password: string) {
   core.info('Signing tag ' + tag)
 
-  let realenv = Object.assign(
+  const realenv = Object.assign(
     { DOCKER_CONTENT_TRUST_REPOSITORY_PASSPHRASE: password },
     env
   )

@@ -156,7 +156,7 @@ var KEY_NAME = 'delegation.key';
 var KEY_PATH = path_1.join(process.cwd(), KEY_NAME);
 function loadKey() {
     return __awaiter(this, void 0, void 0, function () {
-        var securePassword, result;
+        var securePassword;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -172,7 +172,7 @@ function loadKey() {
                             },
                         })];
                 case 1:
-                    result = _a.sent();
+                    _a.sent();
                     core.debug('Removing file');
                     fs_1.unlinkSync(KEY_PATH);
                     core.endGroup();

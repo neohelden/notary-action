@@ -9,9 +9,9 @@ import { getTags, tags2array } from './util'
  */
 async function run() {
   // Write the key
-  let password = await loadKey()
+  const password = await loadKey()
 
-  let tags = tags2array(getTags())
+  const tags = tags2array(getTags())
 
   await sign(tags, password)
 }

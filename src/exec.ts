@@ -23,12 +23,12 @@ export default async function exec(
   command: string,
   { args, env }: ExecOpts
 ): Promise<ExecResult> {
-  let stdout: string = ''
-  let stderr: string = ''
+  let stdout = ''
+  let stderr = ''
 
   env = Object.assign(env, process.env)
 
-  let options: ExecOptions = { env }
+  const options: ExecOptions = { env }
 
   args = args || []
 
@@ -40,7 +40,7 @@ export default async function exec(
   debug('Executing ' + command + ' with args ' + inspect(args))
   debug('Using env: ' + inspect(env))
 
-  let code = await actionsExec(command, args, options)
+  const code = await actionsExec(command, args, options)
 
   return {
     stdout,

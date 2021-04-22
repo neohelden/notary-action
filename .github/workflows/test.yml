@@ -8,7 +8,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Test
-        run: yarn && yarn test
+        run: yarn --frozen-lockfile && yarn test
   audit:
     runs-on: ubuntu-latest
     steps:
@@ -22,6 +22,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: ESLint
-        run: yarn && yarn eslint
+        run: yarn --frozen-lockfile && yarn eslint
       - name: Prettier
-        run: yarn && yarn prettier:check
+        run: yarn --frozen-lockfile && yarn prettier:check

@@ -16,12 +16,12 @@ const KEY_PATH = join(process.cwd(), KEY_NAME)
  */
 export async function loadKey() {
   core.startGroup('Importing key')
-  let securePassword = randomBytes(36).toString('utf-8')
+  const securePassword = randomBytes(36).toString('utf-8')
 
   core.debug('Writing key to ' + KEY_PATH)
   writeFileSync(KEY_PATH, key, { mode: 0o700 })
 
-  let result = await exec('docker', {
+  await exec('docker', {
     args: ['trust', 'key', 'load', KEY_PATH, '--name', keyname],
     env: {
       DOCKER_CONTENT_TRUST: '1',
