@@ -3,7 +3,7 @@ import * as core from '@actions/core'
 import { writeFileSync, unlinkSync } from 'fs'
 import exec from './exec'
 import { join } from 'path'
-import { randomBytes, createHash } from 'crypto'
+import { randomBytes } from 'crypto'
 const key = core.getInput('key')
 const keyname = core.getInput('keyname')
 
@@ -13,8 +13,9 @@ const KEY_PATH = join(process.cwd(), KEY_NAME)
 
 /**
  * This method will load the key into docker.
+ * @returns the password used
  */
-export async function loadKey() {
+export async function loadKey(): Promise<string> {
   core.startGroup('Importing key')
   const securePassword = randomBytes(36).toString('utf-8')
 
@@ -40,7 +41,7 @@ export async function loadKey() {
  * Deletes a specific
  * @param gun The ID of the Key
  */
-export async function deletePrivateKey() {
+export async function deletePrivateKey(): Promise<void> {
   core.startGroup('Deleting key')
   unlinkSync('.docker/trust')
   core.endGroup()

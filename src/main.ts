@@ -1,5 +1,3 @@
-import * as core from '@actions/core'
-import { readFileSync, writeFileSync } from 'fs'
 import { deletePrivateKey, loadKey } from './keys'
 import { sign } from './trust'
 import { getTags, tags2array } from './util'

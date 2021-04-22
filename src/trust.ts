@@ -11,7 +11,7 @@ const env = {
  * @param tags Sign an array of tags
  * @param password The password used for the key
  */
-export async function sign(tags: string[], password: string) {
+export async function sign(tags: string[], password: string): Promise<void> {
   core.startGroup('Signing and pushing images')
 
   const images = await exec('docker', { args: ['images'] })
