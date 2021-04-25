@@ -4,8 +4,10 @@ import { writeFileSync, unlinkSync } from 'fs'
 import exec from './exec'
 import { join } from 'path'
 import { randomBytes } from 'crypto'
-const key = core.getInput('key')
-const keyname = core.getInput('keyname')
+import * as util from 'util'
+
+const key = core.getInput('key', { required: true })
+const keyname = core.getInput('keyname', { required: true })
 
 const KEY_NAME = 'delegation.key'
 

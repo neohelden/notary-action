@@ -15,7 +15,7 @@ export function tags2array(data: string): string[] {
  * @returns Returns all tags to be signed
  */
 export function getTags(): string {
-  const tags = core.getInput('tags')
+  const tags = core.getInput('tags', { required: true })
 
   return tags
 }
