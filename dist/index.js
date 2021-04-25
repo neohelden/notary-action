@@ -150,8 +150,8 @@ var fs_1 = __nccwpck_require__(747);
 var exec_1 = __importDefault(__nccwpck_require__(2));
 var path_1 = __nccwpck_require__(622);
 var crypto_1 = __nccwpck_require__(417);
-var key = core.getInput('key');
-var keyname = core.getInput('keyname');
+var key = core.getInput('key', { required: true });
+var keyname = core.getInput('keyname', { required: true });
 var KEY_NAME = 'delegation.key';
 var KEY_PATH = path_1.join(process.cwd(), KEY_NAME);
 function loadKey() {
@@ -356,11 +356,13 @@ function sign(tags, password) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    core.startGroup('Signing and pushing images');
+                    core.startGroup('List images');
                     return [4, exec_1.default('docker', { args: ['images'] })];
                 case 1:
                     images = _a.sent();
-                    core.debug('Available images: \n' + images.stdout);
+                    core.info('Available images: \n' + images.stdout);
+                    core.endGroup();
+                    core.startGroup('Signing and pushing images');
                     _i = 0, tags_1 = tags;
                     _a.label = 2;
                 case 2:
@@ -433,7 +435,7 @@ function tags2array(data) {
 }
 exports.tags2array = tags2array;
 function getTags() {
-    var tags = core.getInput('tags');
+    var tags = core.getInput('tags', { required: true });
     return tags;
 }
 exports.getTags = getTags;
