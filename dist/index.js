@@ -55,6 +55,7 @@ function exec(command, _a) {
                 case 0:
                     stdout = '';
                     stderr = '';
+                    env = env || {};
                     env = Object.assign(env, process.env);
                     options = { env: env };
                     args = args || [];
