@@ -1,6 +1,7 @@
 import { deletePrivateKey, loadKey } from './keys'
 import { sign } from './trust'
 import { getTags, tags2array } from './util'
+import * as core from '@actions/core'
 
 /**
  * Main entry point of the program
@@ -20,6 +21,7 @@ async function postRun() {
 
 if (!process.env.STATE_isPost) {
   run()
+  core.saveState('isPost', 'true')
 } else {
   postRun()
 }
