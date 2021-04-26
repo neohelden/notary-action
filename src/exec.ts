@@ -26,6 +26,7 @@ export default async function exec(
   let stdout = ''
   let stderr = ''
 
+  env = env || {}
   env = Object.assign(env, process.env)
 
   const options: ExecOptions = { env }
