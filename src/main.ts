@@ -18,7 +18,7 @@ async function postRun() {
   await deletePrivateKey()
 }
 
-if (!!process.env.STATE_isPost) {
+if (!process.env.STATE_isPost) {
   run()
 } else {
   postRun()
