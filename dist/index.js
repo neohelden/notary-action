@@ -187,7 +187,7 @@ function deletePrivateKey() {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             core.startGroup('Deleting key');
-            fs_1.unlinkSync('.docker/trust');
+            fs_1.unlinkSync(process.env.HOME + '/.docker/trust');
             core.endGroup();
             return [2];
         });
