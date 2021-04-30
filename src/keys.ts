@@ -44,6 +44,6 @@ export async function loadKey(): Promise<string> {
  */
 export async function deletePrivateKey(): Promise<void> {
   core.startGroup('Deleting key')
-  unlinkSync('.docker/trust')
+  unlinkSync(process.env.HOME + '/.docker/trust')
   core.endGroup()
 }
