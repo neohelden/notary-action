@@ -23,7 +23,7 @@ export async function sign(tags: string[], password: string): Promise<boolean> {
   core.startGroup('Signing and pushing images')
   for (const tag of tags) {
     const { code } = await signTag(tag, password)
-    failed = failed || code !== 0 // Fail when the return code is 0
+    failed = failed || code !== 0 // Fail when the return code is NOT 0
   }
 
   core.endGroup()
