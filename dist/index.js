@@ -264,18 +264,25 @@ var util_1 = __nccwpck_require__(251);
 var core = __importStar(__nccwpck_require__(186));
 function run() {
     return __awaiter(this, void 0, void 0, function () {
-        var password, tags, failed;
+        var password, tags, err_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4, keys_1.loadKey()];
                 case 1:
                     password = _a.sent();
                     tags = util_1.tags2array(util_1.getTags());
-                    return [4, trust_1.sign(tags, password)];
+                    _a.label = 2;
                 case 2:
-                    failed = _a.sent();
-                    process.exit(failed ? 1 : 0);
-                    return [2];
+                    _a.trys.push([2, 4, , 5]);
+                    return [4, trust_1.sign(tags, password)];
+                case 3:
+                    _a.sent();
+                    return [3, 5];
+                case 4:
+                    err_1 = _a.sent();
+                    core.setFailed(err_1);
+                    return [3, 5];
+                case 5: return [2];
             }
         });
     });
@@ -375,34 +382,35 @@ var env = {
 };
 function sign(tags, password) {
     return __awaiter(this, void 0, void 0, function () {
-        var images, failed, _i, tags_1, tag, code;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
+        var images, _i, tags_1, tag, _a, code, stderr;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
                 case 0:
                     core.startGroup('List images');
                     return [4, exec_1.default('docker', { args: ['images'] })];
                 case 1:
-                    images = _a.sent();
+                    images = _b.sent();
                     core.info('Available images: \n' + images.stdout);
                     core.endGroup();
-                    failed = false;
                     core.startGroup('Signing and pushing images');
                     _i = 0, tags_1 = tags;
-                    _a.label = 2;
+                    _b.label = 2;
                 case 2:
                     if (!(_i < tags_1.length)) return [3, 5];
                     tag = tags_1[_i];
                     return [4, signTag(tag, password)];
                 case 3:
-                    code = (_a.sent()).code;
-                    failed = failed || code !== 0;
-                    _a.label = 4;
+                    _a = _b.sent(), code = _a.code, stderr = _a.stderr;
+                    if (code !== 0) {
+                        throw stderr;
+                    }
+                    _b.label = 4;
                 case 4:
                     _i++;
                     return [3, 2];
                 case 5:
                     core.endGroup();
-                    return [2, failed];
+                    return [2];
             }
         });
     });
