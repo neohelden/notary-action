@@ -10,17 +10,21 @@ const env = {
  * Signs specific tags and pushes them
  * @param tags Sign an array of tags
  * @param password The password used for the key
+ *
+ * @throws An error on abnormal exit
  */
 export async function sign(tags: string[], password: string): Promise<void> {
   core.startGroup('List images')
 
-  const images = await exec('docker', { args: ['images'] })
-  core.info('Available images: \n' + images.stdout)
+  await exec('docker', { args: ['images'] })
   core.endGroup()
 
   core.startGroup('Signing and pushing images')
   for (const tag of tags) {
-    await signTag(tag, password)
+    const { code, stderr } = await signTag(tag, password)
+    if (code !== 0) {
+      throw stderr
+    }
   }
 
   core.endGroup()
@@ -39,7 +43,9 @@ async function signTag(tag: string, password: string) {
     env
   )
 
-  await exec('docker', { env: realenv, args: ['push', tag] })
+  const obj = await exec('docker', { env: realenv, args: ['push', tag] })
 
   core.debug(`Tag ${tag} signed`)
+
+  return obj
 }

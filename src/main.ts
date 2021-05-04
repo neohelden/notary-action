@@ -12,7 +12,11 @@ async function run() {
 
   const tags = tags2array(getTags())
 
-  await sign(tags, password)
+  try {
+    await sign(tags, password)
+  } catch (err) {
+    core.setFailed(err)
+  }
 }
 
 async function postRun() {
