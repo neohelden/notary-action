@@ -1,5 +1,5 @@
 name: Notary Image Signing
-description: 'A Github Action to sign docker images'
+description: 'A Github Action to sign Docker images'
 author: 'Neohelden GmbH'
 branding:
   icon: 'anchor'
