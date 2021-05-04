@@ -12,7 +12,9 @@ async function run() {
 
   const tags = tags2array(getTags())
 
-  await sign(tags, password)
+  const failed = await sign(tags, password)
+
+  process.exit(failed ? 1 : 0)
 }
 
 async function postRun() {

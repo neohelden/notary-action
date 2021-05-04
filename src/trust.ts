@@ -11,19 +11,24 @@ const env = {
  * @param tags Sign an array of tags
  * @param password The password used for the key
  */
-export async function sign(tags: string[], password: string): Promise<void> {
+export async function sign(tags: string[], password: string): Promise<boolean> {
   core.startGroup('List images')
 
   const images = await exec('docker', { args: ['images'] })
   core.info('Available images: \n' + images.stdout)
   core.endGroup()
 
+  let failed = false
+
   core.startGroup('Signing and pushing images')
   for (const tag of tags) {
-    await signTag(tag, password)
+    const { code } = await signTag(tag, password)
+    failed = failed || code !== 0 // Fail when the return code is 0
   }
 
   core.endGroup()
+
+  return failed
 }
 
 /**
@@ -39,7 +44,9 @@ async function signTag(tag: string, password: string) {
     env
   )
 
-  await exec('docker', { env: realenv, args: ['push', tag] })
+  const obj = await exec('docker', { env: realenv, args: ['push', tag] })
 
   core.debug(`Tag ${tag} signed`)
+
+  return obj
 }

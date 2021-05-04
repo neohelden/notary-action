@@ -264,7 +264,7 @@ var util_1 = __nccwpck_require__(251);
 var core = __importStar(__nccwpck_require__(186));
 function run() {
     return __awaiter(this, void 0, void 0, function () {
-        var password, tags;
+        var password, tags, failed;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4, keys_1.loadKey()];
@@ -273,7 +273,8 @@ function run() {
                     tags = util_1.tags2array(util_1.getTags());
                     return [4, trust_1.sign(tags, password)];
                 case 2:
-                    _a.sent();
+                    failed = _a.sent();
+                    process.exit(failed ? 1 : 0);
                     return [2];
             }
         });
@@ -374,7 +375,7 @@ var env = {
 };
 function sign(tags, password) {
     return __awaiter(this, void 0, void 0, function () {
-        var images, _i, tags_1, tag;
+        var images, failed, _i, tags_1, tag, code;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -384,6 +385,7 @@ function sign(tags, password) {
                     images = _a.sent();
                     core.info('Available images: \n' + images.stdout);
                     core.endGroup();
+                    failed = false;
                     core.startGroup('Signing and pushing images');
                     _i = 0, tags_1 = tags;
                     _a.label = 2;
@@ -392,14 +394,15 @@ function sign(tags, password) {
                     tag = tags_1[_i];
                     return [4, signTag(tag, password)];
                 case 3:
-                    _a.sent();
+                    code = (_a.sent()).code;
+                    failed = failed || code !== 0;
                     _a.label = 4;
                 case 4:
                     _i++;
                     return [3, 2];
                 case 5:
                     core.endGroup();
-                    return [2];
+                    return [2, failed];
             }
         });
     });
@@ -407,7 +410,7 @@ function sign(tags, password) {
 exports.sign = sign;
 function signTag(tag, password) {
     return __awaiter(this, void 0, void 0, function () {
-        var realenv;
+        var realenv, obj;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -415,9 +418,9 @@ function signTag(tag, password) {
                     realenv = Object.assign({ DOCKER_CONTENT_TRUST_REPOSITORY_PASSPHRASE: password }, env);
                     return [4, exec_1.default('docker', { env: realenv, args: ['push', tag] })];
                 case 1:
-                    _a.sent();
+                    obj = _a.sent();
                     core.debug("Tag " + tag + " signed");
-                    return [2];
+                    return [2, obj];
             }
         });
     });
