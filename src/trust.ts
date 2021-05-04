@@ -10,6 +10,8 @@ const env = {
  * Signs specific tags and pushes them
  * @param tags Sign an array of tags
  * @param password The password used for the key
+ *
+ * @throws An error on abnormal exit
  */
 export async function sign(tags: string[], password: string): Promise<void> {
   core.startGroup('List images')
