@@ -21,6 +21,6 @@ inputs:
     default: https://notary.docker.io
 
 runs:
-  using: node16
+  using: node12
   main: dist/index.js
   post: dist/index.js
