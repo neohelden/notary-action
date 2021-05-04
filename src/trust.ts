@@ -16,8 +16,7 @@ const env = {
 export async function sign(tags: string[], password: string): Promise<void> {
   core.startGroup('List images')
 
-  const images = await exec('docker', { args: ['images'] })
-  core.info('Available images: \n' + images.stdout)
+  await exec('docker', { args: ['images'] })
   core.endGroup()
 
   core.startGroup('Signing and pushing images')

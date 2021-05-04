@@ -382,15 +382,14 @@ var env = {
 };
 function sign(tags, password) {
     return __awaiter(this, void 0, void 0, function () {
-        var images, _i, tags_1, tag, _a, code, stderr;
+        var _i, tags_1, tag, _a, code, stderr;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
                     core.startGroup('List images');
                     return [4, exec_1.default('docker', { args: ['images'] })];
                 case 1:
-                    images = _b.sent();
-                    core.info('Available images: \n' + images.stdout);
+                    _b.sent();
                     core.endGroup();
                     core.startGroup('Signing and pushing images');
                     _i = 0, tags_1 = tags;
