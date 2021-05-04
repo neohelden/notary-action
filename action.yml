@@ -1,4 +1,4 @@
-name: 'Docker Sign'
+name: Notary Image Signing
 description: 'A Github Action to sign docker images'
 author: 'Neohelden GmbH'
 branding:
@@ -21,6 +21,6 @@ inputs:
     default: https://notary.docker.io
 
 runs:
-  using: node12
+  using: node16
   main: dist/index.js
   post: dist/index.js

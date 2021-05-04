@@ -1,6 +1,6 @@
 # Notary Sign Action
 
-This action is intendet to sign images for docker using [Notary](https://github.com/theupdateframework/notary).
+This action is intended to sign images for docker using [Notary](https://github.com/theupdateframework/notary).
 
 # Usage
 
